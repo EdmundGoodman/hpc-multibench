@@ -68,6 +68,7 @@ class LinePlotModel(BaseModel):
     y_log: bool = False
     x_lim: float | tuple[float, float] | None = None
     y_lim: float | tuple[float, float] | None = None
+    tikz_output: Path | None = None
     enabled: bool = True
 
 
@@ -80,6 +81,7 @@ class BarChartModel(BaseModel):
     fix_metrics: dict[str, Any] = {}
     y_log: bool = False
     y_lim: float | tuple[float, float] | None = None
+    tikz_output: Path | None = None
     enabled: bool = True
 
 
@@ -90,6 +92,7 @@ class RooflinePlotModel(BaseModel):
     gflops_per_sec: str
     mbytes_per_sec: str
     ert_json: Path
+    tikz_output: Path | None = None
     enabled: bool = True
 
 
@@ -98,7 +101,6 @@ class ExportModel(BaseModel):
 
     export_path: Path | None
     export_format: str = "csv"
-    # metrics: list[str] | None = None
     enabled: bool = True
 
 

@@ -17,6 +17,29 @@ from hpc_multibench.yaml_model import BarChartModel, LinePlotModel, RooflinePlot
 sns.set_theme()
 
 
+def _tikzplotlib_export(
+    plot: BarChartModel | LinePlotModel | RooflinePlotModel,
+) -> None:
+    """Export the current matplotlib figure as Tikz."""
+    from typing import Any
+
+    import tikzplotlib
+
+    def tikzplotlib_fix_ncols(obj: Any) -> None:
+        # Derived from https://stackoverflow.com/a/75903189
+        if hasattr(obj, "_ncols"):
+            obj._ncol = obj._ncols  # noqa: SLF001
+        for child in obj.get_children():
+            tikzplotlib_fix_ncols(child)
+
+    print(f"Writing Tikz plot to {plot.tikz_output}")
+    tikzplotlib_fix_ncols(plt.gcf())
+    tikzplotlib.clean_figure()
+    tikzplotlib.save(
+        plot.tikz_output, axis_width="\\textwidth", axis_height="0.45\\textheight"
+    )
+
+
 def draw_line_plot(
     plot: LinePlotModel,
     metrics: list[tuple[RunConfiguration, dict[str, str | UFloat]]],
@@ -49,6 +72,8 @@ def draw_line_plot(
         plt.xscale("log")
     if plot.y_log:
         plt.yscale("log")
+    if plot.tikz_output is not None:
+        _tikzplotlib_export(plot)
     plt.show()
 
 
@@ -75,6 +100,8 @@ def draw_bar_chart(
         plt.ylim(plot.y_lim)
     if plot.y_log:
         plt.yscale("log")
+    if plot.tikz_output is not None:
+        _tikzplotlib_export(plot)
     plt.show()
 
 
@@ -108,4 +135,6 @@ def draw_roofline_plot(
     plt.xscale("log")
     plt.yscale("log")
     plt.title(plot.title)
+    if plot.tikz_output is not None:
+        _tikzplotlib_export(plot)
     plt.show()

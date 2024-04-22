@@ -48,7 +48,8 @@ textual-plotext = "^0.2.1"
 tree-sitter-languages = "==1.10.2"  # Pin for security, to avoid re-auditing
 
 [tool.poetry.group.plot.dependencies]
-matplotlib = "^3.8.3"
+matplotlib = "<=3.7"
+tikzplotlib = "^0.10.1"
 matplotlib-label-lines = "^0.7.0"
 seaborn = "^0.13.2"
 plotext = "^5.2.8"
