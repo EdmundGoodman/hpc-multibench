@@ -14,7 +14,8 @@ from hpc_multibench.run_configuration import RunConfiguration
 from hpc_multibench.uncertainties import UFloat
 from hpc_multibench.yaml_model import BarChartModel, LinePlotModel, RooflinePlotModel
 
-sns.set_theme()
+# sns.set_theme()
+plt.style.use("seaborn-v0_8-whitegrid")
 
 
 def _tikzplotlib_export(
